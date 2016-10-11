@@ -21,22 +21,24 @@ class AccountAPITests: XCTestCase {
     
     func testList_shouldRetrieveContentWithDataTask() {
         let accountAPI = AccountAPI()
-        accountAPI.session = MockURLSession()
+        let mockSession = MockURLSession()
+        accountAPI.session = mockSession
 
         accountAPI.list(for: "Rwenderlich")
 
-        XCTAssertTrue((accountAPI.session as! MockURLSession).dataTaskToHaveBeenCalled)
-        XCTAssertTrue((accountAPI.session as! MockURLSession).task.taskResumeToHaveBeenCalled)
+        XCTAssertTrue(mockSession.dataTaskToHaveBeenCalled)
+        XCTAssertTrue(mockSession.task.taskResumeToHaveBeenCalled)
 
     }
 
     func testList_shouldRetrieveContentWithCorrectURL() {
         let accountAPI = AccountAPI()
-        accountAPI.session = MockURLSession()
+        let mockSession = MockURLSession()
+        accountAPI.session = mockSession
 
         accountAPI.list(for: "Rwenderlich")
 
-        XCTAssertEqual((accountAPI.session as! MockURLSession).testUrl, "https://twitter.com/rwenderlich/following")
+        XCTAssertEqual(mockSession.testUrl, "https://twitter.com/rwenderlich/following")
     }
 
     func testList_shouldCallFinishOnDelegateWhenCanGetAccountList(){
